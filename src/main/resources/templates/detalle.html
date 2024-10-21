@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grupo --</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background-color: #f5f5f5;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #333;
+      padding: 15px 0;
+      text-align: center;
+      z-index: 1000;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      margin: 0 15px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    nav a:hover {
+      background-color: #555;
+    }
+    .container {
+      margin-top: 80px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      flex-grow: 1;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 30px;
+      color: #333;
+      text-align: center;
+    }
+    #integrantes-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+      padding: 0;
+      list-style-type: none;
+    }
+    .member-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .member-card h2 {
+      margin: 0 0 10px 0;
+      color: #333;
+      font-size: 22px;
+    }
+    .member-card p {
+      margin: 5px 0;
+      color: #666;
+    }
+    .member-card .estado {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #4CAF50;
+    }
+  </style>
+  <script>
+    function loadIntegrantes() {
+      fetch('/login/get-integrantes')
+              .then(response => response.json())
+              .then(data => {
+                console.log('Raw data received:', data);  // Log the raw data
+                const ul = document.getElementById('integrantes-list');
+                ul.innerHTML = '';  // Clear existing members
+
+                if (Array.isArray(data)) {
+                  data.forEach(integrante => {
+                    console.log('Processing integrante:', integrante);  // Log each integrante object
+                    const li = document.createElement('li');
+                    li.className = 'member-card';
+                    li.innerHTML = `
+            <h2>${integrante.nombre || 'N/A'} ${integrante.apellido || 'N/A'}</h2>
+            <p><strong>Código:</strong> ${integrante.userCode || 'N/A'}</p>
+            <p><strong>Correo:</strong> ${integrante.correo || 'N/A'}</p>
+            <p><strong>Celular:</strong> ${integrante.celular || 'N/A'}</p>
+            <p class="estado">${integrante.estado || 'N/A'}</p>
+          `;
+                    ul.appendChild(li);
+                  });
+                } else {
+                  console.error('Data is not an array:', data);
+                  ul.innerHTML = '<li>Error: Datos no válidos recibidos del servidor</li>';
+                }
+              })
+              .catch(error => {
+                console.error('Error:', error);
+                const ul = document.getElementById('integrantes-list');
+                ul.innerHTML = '<li>Error al cargar los datos. Por favor, intente de nuevo.</li>';
+              });
+    }
+
+    // Load integrantes when the page loads
+    window.onload = loadIntegrantes;
+  </script>
+</head>
+<body>
+<nav>
+  <a href="#" onclick="loadIntegrantes()">Detalles</a>
+</nav>
+<div class="container">
+  <h1>Grupo --</h1>
+  <ul id="integrantes-list">
+    <!-- Member cards will be inserted here -->
+  </ul>
+</div>
+</body>
+</html>
