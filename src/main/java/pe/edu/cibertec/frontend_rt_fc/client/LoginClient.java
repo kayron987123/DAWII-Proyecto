@@ -9,6 +9,6 @@ import pe.edu.cibertec.frontend_rt_fc.dto.LoginResponseDTO;
 
 @FeignClient(name = "logueo", url = "http://localhost:8081/user")
 public interface LoginClient {
-    @PostMapping("/login")
+    @PostMapping("/autenticar")
     ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequestDTO);
 }
