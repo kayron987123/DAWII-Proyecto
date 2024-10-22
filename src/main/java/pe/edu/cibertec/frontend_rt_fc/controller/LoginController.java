@@ -72,7 +72,7 @@ public class LoginController {
 
     @GetMapping("/get-integrantes")
     public ResponseEntity<List<LoginResponseDTO>> obtenerIntegrantes(Model model){
-        ResponseEntity<List<LoginResponseDTO>> response = restTemplateAutenticacion.exchange("/list", HttpMethod.GET, null, new ParameterizedTypeReference<List<LoginResponseDTO>>() {});
+        ResponseEntity<List<LoginResponseDTO>> response = restTemplateAutenticacion.exchange("/get-integrantes", HttpMethod.GET, null, new ParameterizedTypeReference<List<LoginResponseDTO>>() {});
         return ResponseEntity.ok(response.getBody());
     }
 
