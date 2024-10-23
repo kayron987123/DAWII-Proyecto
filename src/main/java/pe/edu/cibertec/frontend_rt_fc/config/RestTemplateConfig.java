@@ -10,7 +10,7 @@ public class RestTemplateConfig {
 
     @Bean
     public RestTemplate restTemplateAutenticacion(RestTemplateBuilder builder){
-        return builder.rootUri("http://localhost:8081/user")
+        return builder.rootUri("backend-dawii-hycscharebf9gvdp.brazilsouth-01.azurewebsites.net/user")
                 .build();
     }
 }
