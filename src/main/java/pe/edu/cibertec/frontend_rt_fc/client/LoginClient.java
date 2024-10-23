@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import pe.edu.cibertec.frontend_rt_fc.dto.LoginRequestDTO;
 import pe.edu.cibertec.frontend_rt_fc.dto.LoginResponseDTO;
 
-@FeignClient(name = "logueo", url = "backend-dawii-hycscharebf9gvdp.mexicocentral-01.azurewebsites.net/user")
+@FeignClient(name = "logueo", url = "https://backend-dawii-hycscharebf9gvdp.mexicocentral-01.azurewebsites.net/user")
 public interface LoginClient {
     @PostMapping("/autenticar")
     ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequestDTO);
